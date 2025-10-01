@@ -44,7 +44,8 @@ void simulateLeftClick() {
 void saveMousePosition() {
     if (GetCursorPos(&saved_position)) {
         position_saved = true;
-        std::cout << "✅ Position Saved! ("
+        Beep(523, 200); // Play a sound
+        std::cout << "Position Saved! ("
                   << saved_position.x << ", "
                   << saved_position.y << ")" << std::endl;
     } else {
@@ -77,7 +78,7 @@ int main() {
     std::cout << "--- Mouse Jumper Project ---\n"
               << "   [Ctrl + Alt + S]: Save Position\n"
               << "   [F5]: Jump and CLICK!\n"
-              << "   [ESC]: Exit Program\n"
+              << "   [Ctrl + Alt + ESC]: Exit Program\n"
               << "----------------------------\n"
               << "Running..." << std::endl;
 
@@ -105,8 +106,10 @@ int main() {
             }
         }
         
-        // --- CHECK FOR EXIT SHORTCUT (ESC) ---
-        if (GetAsyncKeyState(EXIT_KEY) & 0x8000) {
+        // --- CHECK FOR EXIT SHORTCUT (Ctrl + Alt + ESC) ---
+        if (GetAsyncKeyState(CTRL_KEY) & 0x8000 && 
+            GetAsyncKeyState(ALT_KEY) & 0x8000 && 
+            GetAsyncKeyState(EXIT_KEY) & 0x8000) {
             std::cout << "\nProgram exiting. Goodbye!" << std::endl;
             break;
         }
